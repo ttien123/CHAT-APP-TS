@@ -23,6 +23,7 @@ const Input = ({
     classNameError = 'mt-1 mb-1 text-red-600 min-h-[2px] text-[14px] font-semibold',
     classNameLabel = 'label',
     placeholder,
+    autoComplete,
     labelName,
     ...rest
 }: Props) => {
@@ -33,7 +34,14 @@ const Input = ({
             <label className={classNameLabel}>
                 <span className="text-base label-text text-white">{labelName}</span>
             </label>
-            <input placeholder={placeholder} type={type} className={classNameInput} {...registerResult} {...rest} />
+            <input
+                placeholder={placeholder}
+                autoComplete="current-password"
+                type={type}
+                className={classNameInput}
+                {...registerResult}
+                {...rest}
+            />
             {type != 'checkbox' && <div className={classNameError}>{errorsMessage}</div>}
         </div>
     );

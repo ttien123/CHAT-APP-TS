@@ -45,9 +45,9 @@ export const useListenMessages = (id: string | undefined) => {
             if (newMessage.senderId === id) {
                 setMessages([...messages, newMessage]);
             } else {
-                setListMebNewMess({ id: newMessage.senderId, type: false });
                 const sound = new Audio(notificationSound);
                 sound.play();
+                setListMebNewMess({ id: newMessage.senderId, type: false });
             }
         });
 
