@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import Message from './Message';
 import { useQuery } from '@tanstack/react-query';
 import messageApi from 'src/apis/message.api';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useGetMessage from 'src/zustand/message.ztd';
 import MessageSkeleton from '../skeletons/MessageSkeleton';
 import { useListenMessages } from 'src/hooks/useListenSocket';

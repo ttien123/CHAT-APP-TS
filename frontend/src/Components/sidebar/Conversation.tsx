@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import path from 'src/constants/path';
 import { UserCreate } from 'src/types/conversation.type';
 import useGetMessage from 'src/zustand/message.ztd';
 import useGetStateSocket from 'src/zustand/socket.ztd';

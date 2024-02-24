@@ -1,11 +1,21 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import path from './constants/path';
-import Home from './pages/Home';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
+
 import useSetProfile from './zustand/auth.ztd';
-import NoChatSelected from './pages/Home/Components/NoChatSelected';
-import MessageId from './pages/Home/Components/MessageId';
+// import Home from './pages/Home';
+// import Signup from './pages/Signup';
+// import Login from './pages/Login';
+// import NoChatSelected from './pages/Home/Components/NoChatSelected';
+// import MessageId from './pages/Home/Components/MessageId';
+// import NotFoundPage from './pages/NotFoundPage';
+
+const Home = lazy(() => import('./pages/Home'));
+const Login = lazy(() => import('./pages/Login'));
+const Signup = lazy(() => import('./pages/Signup'));
+const NoChatSelected = lazy(() => import('./pages/Home/Components/NoChatSelected'));
+const MessageId = lazy(() => import('./pages/Home/Components/MessageId'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function ProtectedRoute() {
     const profile = useSetProfile((state) => state.profile);
@@ -25,15 +35,27 @@ const useRouterElements = () => {
             children: [
                 {
                     path: path.home,
-                    element: <Home />,
+                    element: (
+                        <Suspense>
+                            <Home />
+                        </Suspense>
+                    ),
                     children: [
                         {
                             path: path.home,
-                            element: <NoChatSelected />,
+                            element: (
+                                <Suspense>
+                                    <NoChatSelected />
+                                </Suspense>
+                            ),
                         },
                         {
                             path: path.messageId,
-                            element: <MessageId />,
+                            element: (
+                                <Suspense>
+                                    <MessageId />
+                                </Suspense>
+                            ),
                         },
                     ],
                 },
@@ -45,13 +67,29 @@ const useRouterElements = () => {
             children: [
                 {
                     path: path.signUp,
-                    element: <Signup />,
+                    element: (
+                        <Suspense>
+                            <Signup />
+                        </Suspense>
+                    ),
                 },
                 {
                     path: path.login,
-                    element: <Login />,
+                    element: (
+                        <Suspense>
+                            <Login />
+                        </Suspense>
+                    ),
                 },
             ],
+        },
+        {
+            path: '*',
+            element: (
+                <Suspense>
+                    <NotFoundPage />
+                </Suspense>
+            ),
         },
     ]);
 

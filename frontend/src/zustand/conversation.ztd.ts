@@ -1,14 +1,13 @@
-import { ListUserCreate } from 'src/types/conversation.type';
 import { create } from 'zustand';
 
-interface listConversationInterface {
-    listConversation: ListUserCreate | [];
-    setListConversation: (body: ListUserCreate | []) => void;
+interface ValueSearchInterface {
+    valueSearch: string;
+    setValueSearch: (body: string) => void;
 }
 
-const useGetConversation = create<listConversationInterface>()((set) => ({
-    listConversation: [],
-    setListConversation: (body) => set((state) => ({ listConversation: (state.listConversation = body) })),
+const useGetValueSearch = create<ValueSearchInterface>()((set) => ({
+    valueSearch: '',
+    setValueSearch: (body) => set((state) => ({ valueSearch: (state.valueSearch = body) })),
 }));
 
-export default useGetConversation;
+export default useGetValueSearch;

@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
 import { BiLogOut } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import authApi from 'src/apis/auth.api';
@@ -24,13 +23,16 @@ const LogoutButton = () => {
         logoutAccountMutation.mutate();
     };
     return (
-        <div className="mt-auto">
-            {profile ? (
-                <BiLogOut className="w-6 h-6 text-white cursor-pointer" onClick={handleLogout} />
-            ) : (
-                <span className="loading loading-spinner"></span>
-            )}
-        </div>
+        <button type="button" className="flex items-center justify-between" onClick={handleLogout}>
+            <div className="text-[16px] font-medium">Logout</div>
+            <div>
+                {profile ? (
+                    <BiLogOut className="w-6 h-6 text-black cursor-pointer" />
+                ) : (
+                    <span className="loading loading-spinner"></span>
+                )}
+            </div>
+        </button>
     );
 };
 export default LogoutButton;

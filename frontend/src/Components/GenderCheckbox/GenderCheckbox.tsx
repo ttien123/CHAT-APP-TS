@@ -1,5 +1,5 @@
 import { UseFormSetValue } from 'react-hook-form';
-import { FormDataSignUp } from 'src/pages/Signup/Signup';
+import { FormDataSignUp } from 'src/pages/SignUp/SignUp';
 
 const GenderCheckbox = ({
     selectGender,
