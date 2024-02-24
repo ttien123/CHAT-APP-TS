@@ -1,4 +1,3 @@
-import { ListUserCreate } from 'src/types/conversation.type';
 import { create } from 'zustand';
 
 interface ValueSearchInterface {

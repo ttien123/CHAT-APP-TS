@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
 import { BiLogOut } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import authApi from 'src/apis/auth.api';

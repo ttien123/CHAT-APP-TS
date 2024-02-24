@@ -37,7 +37,11 @@ const Home = () => {
     return (
         <div className="flex md:h-[550px] rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
             <Sidebar />
-            <Outlet />
+            <div
+                className={`${!id ? 'hidden md:flex' : ''} min-w-[100vw] md:min-w-[450px] items-center justify-center`}
+            >
+                <Outlet />
+            </div>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsSend } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ import useGetMessage from 'src/zustand/message.ztd';
 
 const MessageInput = () => {
     const { id } = useParams();
-    const inputRef = useRef(null);
     const [message, setMessage] = useState('');
     const { messages, setMessages, setIsCheckMessages, setListMebNewMess } = useGetMessage();
 

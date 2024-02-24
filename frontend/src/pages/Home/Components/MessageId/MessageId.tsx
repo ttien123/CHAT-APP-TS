@@ -21,7 +21,7 @@ const MessageId = () => {
         data?.data && setSelectUser(data?.data);
     }, [data]);
     return (
-        <div className="h-[100vh] md:h-auto min-w-[100vw] md:min-w-[450px] flex flex-col">
+        <div className="h-[100vh] md:max-h-[100%] min-w-[100vw] md:min-w-[450px] flex flex-col">
             <div className="bg-slate-500 px-2 py-2 mb-2 flex items-center justify-center md:justify-start">
                 <button className="md:hidden block p-2" onClick={() => negative(path.home)}>
                     <FaAngleLeft />
