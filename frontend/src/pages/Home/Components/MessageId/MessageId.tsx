@@ -27,7 +27,7 @@ const MessageId = () => {
                     <FaAngleLeft />
                 </button>
                 <div className="flex-1 text-center md:text-left">
-                    <span className="label-text hidden md:inline">To:</span>{' '}
+                    <span className="label-text hidden md:inline">To:</span>
                     <span className="text-gray-900 font-bold pr-8 md:pr-0">{data?.data.fullName}</span>
                 </div>
             </div>

@@ -5,23 +5,25 @@ import messageApi from 'src/apis/message.api';
 import { useEffect, useRef } from 'react';
 import useGetMessage from 'src/zustand/message.ztd';
 import MessageSkeleton from '../skeletons/MessageSkeleton';
-import { useListenMessages } from 'src/hooks/useListenSocket';
+import { useListenMessages, useListenWriting } from 'src/hooks/useListenSocket';
 
 const Messages = () => {
     const { id } = useParams();
     const lastMessageRef = useRef(null);
     const { setMessages, messages, setIsCheckMessages } = useGetMessage();
+    const { isWriting, idReceiverTyping } = useListenWriting();
     const { data, isLoading } = useQuery({
         queryKey: ['Messages', id],
         queryFn: () => messageApi.getMessages(id),
     });
+
     useListenMessages(id);
 
     useEffect(() => {
         setTimeout(() => {
             (lastMessageRef.current as any)?.scrollIntoView({ behavior: 'smooth' });
         }, 0);
-    }, [messages]);
+    }, [messages, isWriting]);
 
     useEffect(() => {
         data?.data && setMessages(data?.data);
@@ -37,6 +39,11 @@ const Messages = () => {
                         <Message message={message} />
                     </div>
                 ))}
+            {messages.length > 0 && isWriting && idReceiverTyping === id && (
+                <div ref={lastMessageRef}>
+                    <Message />
+                </div>
+            )}
             {isLoading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
             {!isLoading && messages.length === 0 && (
                 <p className="text-center text-white">Send a message to start the conversation</p>

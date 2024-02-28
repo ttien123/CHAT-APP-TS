@@ -7,8 +7,10 @@ import { useListenMessages } from 'src/hooks/useListenSocket';
 
 const Home = () => {
     const { id } = useParams();
+
     const { messages, setMessages, isCheckMessages, setIsCheckMessages } = useGetMessage();
     useListenMessages(id);
+
     useEffect(() => {
         const titleElement = document.querySelectorAll('title');
         const sound = new Audio(notificationSound);
