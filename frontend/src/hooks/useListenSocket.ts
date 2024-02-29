@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSetProfile from 'src/zustand/auth.ztd';
 import { io } from 'socket.io-client';
 import useGetStateSocket from 'src/zustand/socket.ztd';
@@ -55,4 +55,24 @@ export const useListenMessages = (id: string | undefined) => {
             socket?.off('newMessage');
         };
     }, [socket, setMessages, messages, id]);
+};
+
+export const useListenWriting = () => {
+    const { socket } = useGetStateSocket();
+    const { setIsWriting, isWriting } = useGetMessage();
+    const [idReceiverTyping, setIdReceiverTyping] = useState('');
+
+    useEffect(() => {
+        socket?.on('typingServer', ({ senderId, _, message }) => {
+            !isWriting && message && setIsWriting(Boolean(message));
+            isWriting && !message && setIsWriting(Boolean(message));
+            setIdReceiverTyping(senderId);
+        });
+
+        return () => {
+            socket?.off('typingServer');
+        };
+    }, [socket, setIsWriting, isWriting, idReceiverTyping, setIdReceiverTyping]);
+
+    return { isWriting, idReceiverTyping };
 };

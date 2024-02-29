@@ -1,23 +1,46 @@
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BsSend } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
 import messageApi from 'src/apis/message.api';
+import useSetProfile from 'src/zustand/auth.ztd';
 import useGetMessage from 'src/zustand/message.ztd';
+import useGetStateSocket from 'src/zustand/socket.ztd';
 
 const MessageInput = () => {
     const { id } = useParams();
+    const { profile } = useSetProfile();
     const [message, setMessage] = useState('');
     const { messages, setMessages, setIsCheckMessages, setListMebNewMess } = useGetMessage();
-
+    const { socket } = useGetStateSocket();
+    const [typingCount, setTypingCount] = useState(0);
     const sendMessageMutation = useMutation({
         mutationFn: (body: { id: string; message: string }) => messageApi.sendMessage(body),
     });
 
+    useEffect(() => {
+        if (message && typingCount === 0) {
+            socket?.emit('typing', { senderId: profile?._id, receiverId: id, message });
+            setTypingCount(1);
+        } else if (!message && typingCount === 1) {
+            socket?.emit('typing', { senderId: profile?._id, receiverId: id, message: '' });
+            setTypingCount(0);
+        }
+
+        return () => {
+            socket?.off('typing');
+        };
+    }, [message, id, profile?._id, socket, typingCount]);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!message) return;
+        const trimmedMessage = message.trim();
+
+        if (trimmedMessage === '') {
+            setMessage('');
+            return;
+        }
         const data = { id, message };
         sendMessageMutation.mutate(data as { id: string; message: string }, {
             onSuccess: (data) => {
